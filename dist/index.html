@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="format-detection" content="telephone=no">
+
+  <!-- Meta / OG tags - config.js 값으로 script에서 동적 설정 -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="">
+  <meta property="og:description" content="">
+  <meta property="og:image" content="">
+  <meta name="description" content="">
+
+  <title>Wedding Invitation</title>
+
+  <!-- Fonts: SUIT variable font -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/variable/woff2/SUIT.css">
+
+  <script type="module" crossorigin src="/ygmj-wedding/assets/index-fneg75WK.js"></script>
+  <link rel="stylesheet" crossorigin href="/ygmj-wedding/assets/index-DrTBhi3r.css">
+</head>
+<body>
+
+  <!-- ═══ Curtain Opening Animation ═══ -->
+  <div id="curtain" class="curtain">
+    <div class="curtain__left"></div>
+    <div class="curtain__right"></div>
+    <div class="curtain__content">
+      <p class="curtain__subtitle">Wedding Invitation</p>
+      <p class="curtain__names" id="curtainNames"></p>
+      <button class="curtain__btn" id="curtainBtn">초대장 열기</button>
+    </div>
+  </div>
+
+  <!-- ═══ Falling Petals ═══ -->
+  <canvas id="petalCanvas" class="petal-canvas"></canvas>
+
+  <!-- ═══ Toast Notification ═══ -->
+  <div id="toast" class="toast" aria-live="polite"></div>
+
+  <!-- ═══ Photo Viewer Modal ═══ -->
+  <div id="photoModal" class="photo-modal" role="dialog" aria-modal="true" aria-label="사진 보기">
+    <button class="photo-modal__close" id="modalClose" aria-label="닫기">&times;</button>
+    <button class="photo-modal__nav photo-modal__nav--prev" id="modalPrev" aria-label="이전 사진">&#8249;</button>
+    <button class="photo-modal__nav photo-modal__nav--next" id="modalNext" aria-label="다음 사진">&#8250;</button>
+    <div class="photo-modal__container" id="modalContainer">
+      <img class="photo-modal__img" id="modalImg" src="" alt="사진" draggable="false">
+    </div>
+    <div class="photo-modal__counter" id="modalCounter"></div>
+  </div>
+
+  <!-- ═══ Main Content ═══ -->
+  <main id="mainContent" class="main-content">
+
+    <!-- ─── Hero Section ─── -->
+    <section class="section hero" id="hero">
+      <div class="hero__overlay"></div>
+      <img class="hero__photo" id="heroPhoto" src="" alt="웨딩 사진" loading="eager">
+      <div class="hero__content">
+        <p class="hero__label animate-item" data-animate="fade-down">Wedding Invitation</p>
+        <h1 class="hero__names animate-item" data-animate="fade-up" id="heroNames"></h1>
+        <div class="hero__divider animate-item" data-animate="fade-in"></div>
+        <p class="hero__date animate-item" data-animate="fade-up" id="heroDate"></p>
+        <p class="hero__venue animate-item" data-animate="fade-up" id="heroVenue"></p>
+
+        <!-- Countdown (원래 위치로 복원) -->
+        <div class="countdown animate-item" data-animate="fade-up" id="countdown">
+          <p class="countdown__label" id="countdownLabel"></p>
+          <div class="countdown__timer">
+            <div class="countdown__item">
+              <span class="countdown__number" id="countDays">0</span>
+              <span class="countdown__unit">일</span>
+            </div>
+            <div class="countdown__sep">:</div>
+            <div class="countdown__item">
+              <span class="countdown__number" id="countHours">0</span>
+              <span class="countdown__unit">시간</span>
+            </div>
+            <div class="countdown__sep">:</div>
+            <div class="countdown__item">
+              <span class="countdown__number" id="countMinutes">0</span>
+              <span class="countdown__unit">분</span>
+            </div>
+            <div class="countdown__sep">:</div>
+            <div class="countdown__item">
+              <span class="countdown__number" id="countSeconds">0</span>
+              <span class="countdown__unit">초</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ─── Greeting Section ─── -->
+    <section class="section greeting" id="greeting">
+      <div class="section__inner">
+        <div class="ornament animate-item" data-animate="fade-in">&#10047;</div>
+        <h2 class="section__title animate-item" data-animate="fade-up" id="greetingTitle"></h2>
+        <p class="greeting__text animate-item" data-animate="fade-up" id="greetingContent"></p>
+        <div class="greeting__parents animate-item" data-animate="fade-up" id="greetingParents"></div>
+      </div>
+    </section>
+
+    <!-- ─── Calendar Section ─── -->
+    <section class="section calendar-section" id="calendarSection">
+      <div class="section__inner">
+        <h2 class="section__title animate-item" data-animate="fade-up">예식 일시</h2>
+        <div class="calendar animate-item" data-animate="scale-in" id="calendarGrid"></div>
+      </div>
+    </section>
+
+    <!-- Our Story Section removed -->
+
+    <!-- ─── Gallery Section ─── -->
+    <!-- <section class="section gallery" id="gallery">
+      <div class="section__inner">
+        <h2 class="section__title animate-item" data-animate="fade-up">갤러리</h2>
+        <div class="gallery__grid" id="galleryGrid"></div>
+      </div>
+    </section> -->
+
+    <!-- ─── Location Section ─── -->
+    <section class="section location" id="location">
+      <div class="section__inner">
+        <h2 class="section__title animate-item" data-animate="fade-up">오시는 길</h2>
+        <div class="location__info animate-item" data-animate="fade-up">
+          <p class="location__venue" id="locationVenue"></p>
+          <p class="location__hall" id="locationHall"></p>
+          <p class="location__address" id="locationAddress"></p>
+          <p class="location__tel" id="locationTel"></p>
+        </div>
+        <button class="btn btn--text location__copy animate-item" data-animate="fade-up" id="copyAddressBtn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          주소 복사
+        </button>
+        <div class="location__map animate-item" data-animate="scale-in">
+          <img class="location__map-img" id="locationMapImg" src="" alt="약도" loading="lazy">
+        </div>
+        <div class="location__links animate-item" data-animate="fade-up">
+          <a class="btn btn--kakao" id="kakaoMapBtn" href="" target="_blank" rel="noopener">카카오맵</a>
+          <a class="btn btn--naver" id="naverMapBtn" href="" target="_blank" rel="noopener">네이버지도</a>
+        </div>
+        <div class="location__guide animate-item" data-animate="fade-up">
+          <div class="location-guide__item">
+            <div class="location-guide__icon" aria-hidden="true">🚇</div>
+            <div class="location-guide__body">
+              <h3 class="location-guide__title">지하철 이용시 : 4호선 혜화역 하차 → 4번 출구</h3>
+              <ul class="location-guide__list">
+                <li>셔틀버스 : 혜화역 4번 출구 T스토어 앞 (운행간격: 5분 ~ 10분)</li>
+                <li>혜화역 1번출구 → 7번 마을버스 (성균관대 정문하차)</li>
+                <li>도보이용시 : 8분거리</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="location-guide__item">
+            <div class="location-guide__icon" aria-hidden="true">🚌</div>
+            <div class="location-guide__body">
+              <h3 class="location-guide__title">버스 이용시 : 명륜3가, 성대입구 정류장 하차</h3>
+              <ul class="location-guide__list">
+                <li>간선버스(파랑) - 100, 102, 104, 107, 140, 143, 150, 151, 160, 162, 171, 172, 272, 301, 710</li>
+                <li>지선버스(초록) - 8101, 8111</li>
+                <li>광역버스(빨강) - 1101, 7101</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="location-guide__item">
+            <div class="location-guide__icon" aria-hidden="true">🚗</div>
+            <div class="location-guide__body">
+              <h3 class="location-guide__title">자가용 이용시</h3>
+              <ul class="location-guide__list">
+                <li>네비게이션 : "성균관컨벤션웨딩홀" 검색</li>
+                <li>주차장 안내 : 본관 주차장, 제1주차장, 성균관대학교 주차장 (하객주차 2시간 무료)</li>
+                <li>성균관대학교 정문 안 주차팀 안내 배치</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Bus Section (전세버스 신청) ─── -->
+    <section class="section" id="bus">
+      <div class="section__inner">
+        <h2 class="section__title animate-item" data-animate="fade-up">전세버스 안내🚌</h2>
+        <p class="animate-item" data-animate="fade-up">
+          멀리서 귀한 걸음 해주시는 하객 여러분께서<br/>
+          편안하게 오실 수 있도록 전세버스를 준비했습니다.<br/>
+        </p>
+        <p>
+          [출발일시] <br/>
+          2026년 6월 6일 (토요일) <br/>
+          오전 00시 00분 출발<br/><br/>
+          [출발장소] <br/>
+          0000<br/><br/>
+
+        </p>
+        <button class="btn btn--text animate-item" data-animate="fade-up" id="busApplyBtn">
+          전세버스 이용 신청하기
+        </button>
+      </div>
+    </section>
+
+    <!-- ─── RSVP Section (참석 여부) ─── -->
+    <section class="section" id="rsvp">
+      <div class="section__inner">
+        <h2 class="section__title animate-item" data-animate="fade-up">결혼식 참석 여부</h2>
+        <p class="animate-item" data-animate="fade-up">
+          참석 가능 여부를 미리 알려주시면 식장 준비에 큰 도움이 됩니다.
+        </p>
+        <button class="btn btn--text animate-item" data-animate="fade-up" id="rsvpApplyBtn">
+          참석 여부 남기기
+        </button>
+      </div>
+    </section>
+
+    <!-- ─── Flower Section (화환 안내) ─── -->
+    <section class="section flower" id="flower">
+      <div class="section__inner">
+        <div class="flower-card animate-item" data-animate="fade-up">
+          <div class="flower-card__badge">화환 안내💐</div>
+          <div class="flower-card__body">
+            <p>예식장 내부 공간이 협소하여<br>마음만 감사히 받고<br>화환은 정중히 사양하고자 합니다.</p>
+            <p>보내주시는 따뜻한 정성을 깊이 간직하며<br>그 마음 잊지 않고<br>예쁘게 잘 살겠습니다.🙇🏻‍♀️</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Account Section (축의금) ─── -->
+    <section class="section account" id="account">
+      <div class="section__inner">
+        <h2 class="section__title animate-item" data-animate="fade-up">마음 전하실 곳</h2>
+        <p class="account__desc animate-item" data-animate="fade-up">축하의 마음을 담아 축의금을 전달해 보세요.</p>
+
+        <!-- Groom Accounts -->
+        <div class="accordion animate-item" data-animate="fade-up">
+          <button class="accordion__trigger" id="groomAccordion" aria-expanded="false">
+            <span class="accordion__icon">&#9835;</span>
+            <span>신랑측 계좌번호</span>
+            <svg class="accordion__arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="accordion__panel" id="groomAccordionPanel">
+            <div class="accordion__panel-inner" id="groomAccountList"></div>
+          </div>
+        </div>
+
+        <!-- Bride Accounts -->
+        <div class="accordion animate-item" data-animate="fade-up">
+          <button class="accordion__trigger" id="brideAccordion" aria-expanded="false">
+            <span class="accordion__icon">&#9835;</span>
+            <span>신부측 계좌번호</span>
+            <svg class="accordion__arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="accordion__panel" id="brideAccordionPanel">
+            <div class="accordion__panel-inner" id="brideAccountList"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Footer ─── -->
+    <footer class="footer">
+      <p class="footer__text" id="footerText"></p>
+    </footer>
+
+  </main>
+
+  <!-- Bus 신청 모달 -->
+  <div class="bus-modal" id="busModal" aria-hidden="true" role="dialog" aria-label="전세버스 이용 신청">
+    <div class="bus-modal__backdrop" id="busModalBackdrop"></div>
+    <div class="bus-modal__dialog">
+      <button class="bus-modal__close" id="busModalClose" aria-label="닫기">&times;</button>
+      <h3 class="bus-modal__title">전세버스 이용 신청</h3>
+      <p class="bus-modal__desc">성함과 연락처, 전달사항을 남겨주시면 버스 배정에 참고하겠습니다.</p>
+      <form class="bus-modal__form" id="busForm">
+        <label class="bus-modal__field">
+          <span>성함<span class="bus-modal__required">*</span></span>
+          <input type="text" id="busName" name="name" required autocomplete="name" placeholder="예) 홍길동" />
+        </label>
+        <label class="bus-modal__field">
+          <span>연락처<span class="bus-modal__required">*</span></span>
+          <input type="tel" id="busPhone" name="phone" required autocomplete="tel" placeholder="예) 010-0000-0000" />
+        </label>
+        <label class="bus-modal__field">
+          <span>전달사항 (선택)</span>
+          <textarea id="busMessage" name="message" rows="3" placeholder="동승 인원, 탑승 장소 등 자유롭게 남겨주세요."></textarea>
+        </label>
+        <button type="submit" class="btn bus-modal__submit" id="busSubmitBtn">
+          신청하기
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- RSVP 모달 -->
+  <div class="bus-modal" id="rsvpModal" aria-hidden="true" role="dialog" aria-label="결혼식 참석 정보 전달">
+    <div class="bus-modal__backdrop" id="rsvpModalBackdrop"></div>
+    <div class="bus-modal__dialog">
+      <button class="bus-modal__close" id="rsvpModalClose" aria-label="닫기">&times;</button>
+      <h3 class="bus-modal__title">참석 정보 전달하기 (RSVP)</h3>
+      <p class="bus-modal__desc">참석 여부를 선택하시고, 전달하고 싶은 정보를 남겨주세요.</p>
+
+      <form class="bus-modal__form" id="rsvpForm">
+        <!-- 참석 여부 토글 -->
+        <div class="rsvp-toggle-group rsvp-status-toggle" aria-label="참석 여부 선택" role="group">
+          <button type="button" class="rsvp-toggle-btn is-active" data-status="참석 가능">참석 가능</button>
+          <button type="button" class="rsvp-toggle-btn" data-status="참석 불가">참석 불가</button>
+        </div>
+        <input type="hidden" id="rsvpStatus" name="status" value="참석 가능" />
+
+        <p class="rsvp-section-label">신랑 &amp; 신부에게 전달될 정보를 입력해주세요.</p>
+
+        <!-- 신랑측 / 신부측 토글 -->
+        <div class="rsvp-toggle-group rsvp-party-toggle" aria-label="신랑측 / 신부측" role="group">
+          <button type="button" class="rsvp-toggle-btn is-active" data-party="신랑측">신랑측</button>
+          <button type="button" class="rsvp-toggle-btn" data-party="신부측">신부측</button>
+        </div>
+        <input type="hidden" id="rsvpParty" name="party" value="신랑측" />
+
+        <label class="bus-modal__field">
+          <span>성함<span class="bus-modal__required">*</span></span>
+          <input type="text" id="rsvpName" name="name" required autocomplete="name" placeholder="예) 홍길동" />
+        </label>
+
+        <label class="bus-modal__field">
+          <span>연락처<span class="bus-modal__required">*</span></span>
+          <input type="tel" id="rsvpPhone" name="phone" required autocomplete="tel" placeholder="예) 010-0000-0000" />
+        </label>
+
+        <label class="bus-modal__field">
+          <span>전달사항</span>
+          <textarea id="rsvpMessage" name="message" rows="3" placeholder="축하 메시지, 식사 여부 등 자유롭게 남겨주세요. (최대 30자)"></textarea>
+        </label>
+
+        <label class="bus-modal__field">
+          <span>추가 인원</span>
+          <select id="rsvpExtra" name="extra">
+            <option value="없음" selected>없음</option>
+            <option value="1명">1명</option>
+            <option value="2명">2명</option>
+            <option value="3명 이상">3명 이상</option>
+          </select>
+        </label>
+
+        <label class="bus-modal__field">
+          <span>전세버스<span class="bus-modal__required">*</span></span>
+          <select id="rsvpBus" name="bus" required>
+            <option value="탑승안함" selected>탑승안함</option>
+            <option value="탑승">탑승</option>
+            <option value="미정">미정</option>
+          </select>
+        </label>
+
+        <div class="rsvp-consent">
+          <p class="rsvp-consent__text">
+            참석 정보 전달을 위해 성함, 연락처, 참석 여부, 전세버스 이용 여부 등의 정보를 수집·이용합니다.
+            수집된 정보는 예식 준비 및 안내 목적에만 사용되며, 예식 종료 후 안전하게 파기됩니다.
+          </p>
+          <label class="rsvp-consent__checkbox">
+            <input type="checkbox" id="rsvpAgree" name="agree" />
+            <span>개인정보 수집 및 이용에 동의합니다.<span class="bus-modal__required">*</span></span>
+          </label>
+        </div>
+
+        <button type="submit" class="btn bus-modal__submit" id="rsvpSubmitBtn">
+          참석 정보 전달하기
+        </button>
+      </form>
+    </div>
+  </div>
+
+</body>
+</html>
