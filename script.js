@@ -247,9 +247,9 @@ import CONFIG from './src/config.js';
 
   function initHero() {
     $('#heroPhoto').src = 'images/hero/1.jpg';
-    $('#heroNames').textContent = `${CONFIG.groom.name}  ·  ${CONFIG.bride.name}`;
-    $('#heroDate').textContent = formatDate(CONFIG.wedding.date, CONFIG.wedding.time);
-    $('#heroVenue').textContent = CONFIG.wedding.venue;
+    // $('#heroNames').textContent = `${CONFIG.groom.name}  ·  ${CONFIG.bride.name}`;
+    // $('#heroDate').textContent = formatDate(CONFIG.wedding.date, CONFIG.wedding.time);
+    // $('#heroVenue').textContent = CONFIG.wedding.venue;
   }
 
   /* ═══════════════════════════════════════════
@@ -275,7 +275,8 @@ import CONFIG from './src/config.js';
       }
 
       const totalDays = Math.ceil(diff / (1000 * 60 * 60 * 24));
-      labelEl.textContent = `결혼식까지 D-${totalDays}`;
+      const dText = `D-${totalDays}`;
+      labelEl.innerHTML = `결혼식까지 <span class="countdown__em">${dText}</span>`;
 
       const days = Math.floor(diff / (1000 * 60 * 60 * 24));
       const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
@@ -336,6 +337,9 @@ import CONFIG from './src/config.js';
     const weddingDay = dt.getDate();
 
     const grid = $('#calendarGrid');
+
+    // 캘린더 섹션이 주석 처리되었거나 없는 경우 바로 종료
+    if (!grid) return;
 
     // Header
     const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
@@ -568,17 +572,161 @@ import CONFIG from './src/config.js';
     const w = CONFIG.wedding;
     const venueEl = $('#locationVenue');
     const hallEl = $('#locationHall');
-    if (venueEl) venueEl.textContent = `${w.venue} ${w.hall}`;
-    if (hallEl) hallEl.textContent = '';
-    $('#locationAddress').textContent = w.address;
-    $('#locationTel').textContent = w.tel ? `Tel. ${w.tel}` : '';
+    if (venueEl) {
+      const venue = w.venue || '';
+      const hall = w.hall || '';
+      const hasVenue = venue.trim().length > 0;
+      const hasHall = hall.trim().length > 0;
+
+      const lineText = hasVenue && hasHall ? `${venue} ${hall}` : (venue || hall);
+      venueEl.textContent = lineText;
+
+      if (w.tel) {
+        const cleanTel = w.tel.replace(/[^0-9+]/g, '');
+        venueEl.innerHTML += `
+          <a href="tel:${cleanTel}" class="location__tel-link" aria-label="전화 걸기">
+            <span class="location__tel-icon" aria-hidden="true">
+              <svg
+                viewBox="0 0 24 24"
+                width="14"
+                height="14"
+                stroke="currentColor"
+                stroke-width="2"
+                fill="none"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.1 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+            </span>
+          </a>
+        `;
+      }
+    }
+
+    // Hall 요소는 한 줄 구성 후 숨김 처리
+    if (hallEl) {
+      hallEl.textContent = '';
+      hallEl.style.display = 'none';
+    }
+
+    const addressEl = $('#locationAddress');
+    if (addressEl) {
+      addressEl.textContent = w.address;
+      addressEl.innerHTML += `
+        <button type="button" class="location__copy-inline" id="copyAddressBtn" aria-label="주소 복사">
+          <span class="location__copy-icon" aria-hidden="true">
+            <svg
+              viewBox="0 0 24 24"
+              width="14"
+              height="14"
+              stroke="currentColor"
+              stroke-width="2"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+          </span>
+        </button>
+      `;
+    }
+
     $('#locationMapImg').src = 'images/location/1.jpg';
     $('#kakaoMapBtn').href = w.mapLinks.kakao || '#';
     $('#naverMapBtn').href = w.mapLinks.naver || '#';
 
-    $('#copyAddressBtn').addEventListener('click', () => {
-      copyToClipboard(w.address, '주소가 복사되었습니다');
-    });
+    const copyBtn = $('#copyAddressBtn');
+    if (copyBtn) {
+      copyBtn.addEventListener('click', () => {
+        copyToClipboard(w.address, '주소가 복사되었습니다');
+      });
+    }
+  }
+
+  /* ═══════════════════════════════════════════
+     RSVP Intro Modal (참석 여부 안내)
+     ═══════════════════════════════════════════ */
+
+  function initRsvpIntroModal() {
+    const modal = $('#rsvpIntroModal');
+    if (!modal) return;
+
+    const backdrop = $('#rsvpIntroBackdrop');
+    const closeBtn = $('#rsvpIntroClose');
+    const primaryBtn = $('#rsvpIntroPrimaryBtn');
+    const muteBtn = $('#rsvpIntroMuteBtn');
+
+    const coupleEl = $('#rsvpIntroCouple');
+    const dateEl = $('#rsvpIntroDate');
+    const venueEl = $('#rsvpIntroVenue');
+
+    const w = CONFIG.wedding;
+
+    if (coupleEl) {
+      coupleEl.textContent = `신랑 ${CONFIG.groom.fullName}, 신부 ${CONFIG.bride.fullName}`;
+    }
+
+    if (dateEl) {
+      dateEl.textContent = formatDate(w.date, w.time);
+    }
+
+    if (venueEl) {
+      const hall = w.hall ? ` ${w.hall}` : '';
+      venueEl.textContent = `${w.venue}${hall}`;
+    }
+
+    const storageKey = 'rsvpIntroHideDate';
+    const today = new Date().toISOString().slice(0, 10);
+
+    function openIntro() {
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('no-scroll');
+    }
+
+    function closeIntro() {
+      modal.classList.remove('is-open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('no-scroll');
+    }
+
+    // 오늘 하루 보지 않기 설정이 되어 있으면 열지 않음
+    try {
+      const stored = window.localStorage && window.localStorage.getItem(storageKey);
+      if (stored === today) {
+        return;
+      }
+    } catch {
+      // localStorage 사용 불가시에도 그냥 계속 진행
+    }
+
+    backdrop && backdrop.addEventListener('click', closeIntro);
+    closeBtn && closeBtn.addEventListener('click', closeIntro);
+
+    if (primaryBtn) {
+      primaryBtn.addEventListener('click', () => {
+        closeIntro();
+        const trigger = $('#rsvpApplyBtn');
+        if (trigger) trigger.click();
+      });
+    }
+
+    if (muteBtn) {
+      muteBtn.addEventListener('click', () => {
+        try {
+          window.localStorage && window.localStorage.setItem(storageKey, today);
+        } catch {
+          // ignore
+        }
+        closeIntro();
+      });
+    }
+
+    // 사이트 진입 시 한 번 자동으로 열기
+    openIntro();
   }
 
   /* ═══════════════════════════════════════════
@@ -679,9 +827,7 @@ import CONFIG from './src/config.js';
     const phoneInput = $('#rsvpPhone');
     const statusHidden = $('#rsvpStatus');
     const partyHidden = $('#rsvpParty');
-    const messageInput = $('#rsvpMessage');
-    const extraSelect = $('#rsvpExtra');
-    const busSelect = $('#rsvpBus');
+    const companionInput = $('#rsvpCompanion');
     const agreeCheckbox = $('#rsvpAgree');
     const submitBtn = $('#rsvpSubmitBtn');
 
@@ -745,9 +891,7 @@ import CONFIG from './src/config.js';
       const phone = phoneInput ? phoneInput.value.trim() : '';
       const status = statusHidden ? statusHidden.value : '';
       const party = partyHidden ? partyHidden.value : '';
-      const message = messageInput ? messageInput.value.trim() : '';
-      const extra = extraSelect ? extraSelect.value : '';
-      const bus = busSelect ? busSelect.value : '';
+      const companion = companionInput ? companionInput.value.trim() : '';
 
       if (!name || !phone || !status) {
         showToast('성함, 연락처, 참석 여부를 모두 입력해주세요.');
@@ -779,14 +923,26 @@ import CONFIG from './src/config.js';
             phone,
             status,
             party,
-            extra,
-            bus,
-            message
+            companion
           })
         });
 
         showToast('참석 여부가 정상적으로 전달되었습니다. 감사합니다.');
+
+        // 폼 값 및 토글 상태 리셋
         form.reset();
+        if (statusButtons.length && statusHidden) {
+          statusButtons.forEach((b) => b.classList.remove('is-active'));
+          statusHidden.value = '';
+        }
+        if (partyButtons.length && partyHidden) {
+          partyButtons.forEach((b) => b.classList.remove('is-active'));
+          partyHidden.value = '';
+        }
+        if (companionInput) {
+          companionInput.value = '0';
+        }
+
         closeModal();
       } catch (err) {
         console.error('참석 여부 전송 오류:', err);
@@ -795,11 +951,9 @@ import CONFIG from './src/config.js';
         submitBtn && (submitBtn.disabled = false);
       }
     });
-  }
+    }
 
-  /* ═══════════════════════════════════════════
-     Bus Section (셔틀버스 인원)
-     ═══════════════════════════════════════════ */
+    // ================= 버스 인원 조회 =================
 
   async function fetchBusCount() {
     const statusEl = $('#busCountStatus');
@@ -979,6 +1133,7 @@ import CONFIG from './src/config.js';
     initPhotoModal();
     initLocation();
     initBusForm();
+    initRsvpIntroModal();
     initRsvpForm();
     initAccounts();
     initFooter();

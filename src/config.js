@@ -3,6 +3,7 @@ const CONFIG = {
   useCurtain: false,
   groom: {
     name: "영광",
+    fullName: "배영광",
     nameEn: "Glory",
     father: "배경렬",
     mother: "한성자",
@@ -11,6 +12,7 @@ const CONFIG = {
   },
   bride: {
     name: "민주",
+    fullName: "곽민주",
     nameEn: "Minju",
     father: "곽평찬",
     mother: "이현순",

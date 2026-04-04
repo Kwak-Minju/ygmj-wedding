@@ -17,8 +17,8 @@
   <!-- Fonts: SUIT variable font -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/variable/woff2/SUIT.css">
 
-  <script type="module" crossorigin src="/ygmj-wedding/assets/index-CGngr2Fm.js"></script>
-  <link rel="stylesheet" crossorigin href="/ygmj-wedding/assets/index-DrTBhi3r.css">
+  <script type="module" crossorigin src="/ygmj-wedding/assets/index-CH2wHKOX.js"></script>
+  <link rel="stylesheet" crossorigin href="/ygmj-wedding/assets/index-C4EAslYW.css">
 </head>
 <body>
 
@@ -58,13 +58,18 @@
       <div class="hero__overlay"></div>
       <img class="hero__photo" id="heroPhoto" src="" alt="웨딩 사진" loading="eager">
       <div class="hero__content">
-        <p class="hero__label animate-item" data-animate="fade-down">Wedding Invitation</p>
+        <!-- <p class="hero__label animate-item" data-animate="fade-down">Wedding Invitation</p> -->
         <h1 class="hero__names animate-item" data-animate="fade-up" id="heroNames"></h1>
         <div class="hero__divider animate-item" data-animate="fade-in"></div>
         <p class="hero__date animate-item" data-animate="fade-up" id="heroDate"></p>
         <p class="hero__venue animate-item" data-animate="fade-up" id="heroVenue"></p>
+      </div>
 
-        <!-- Countdown (원래 위치로 복원) -->
+    </section>
+
+    <!-- ─── Countdown Section ─── -->
+    <section class="countdown_section" id="countdownSection">
+      <div class="section__inner">
         <div class="countdown animate-item" data-animate="fade-up" id="countdown">
           <p class="countdown__label" id="countdownLabel"></p>
           <div class="countdown__timer">
@@ -90,7 +95,6 @@
           </div>
         </div>
       </div>
-
     </section>
 
     <!-- ─── Greeting Section ─── -->
@@ -103,13 +107,14 @@
       </div>
     </section>
 
-    <!-- ─── Calendar Section ─── -->
+    <!-- ─── Calendar Section (예식 일시, 일시 숨김) ───
     <section class="section calendar-section" id="calendarSection">
       <div class="section__inner">
         <h2 class="section__title animate-item" data-animate="fade-up">예식 일시</h2>
         <div class="calendar animate-item" data-animate="scale-in" id="calendarGrid"></div>
       </div>
     </section>
+    -->
 
     <!-- Our Story Section removed -->
 
@@ -129,12 +134,7 @@
           <p class="location__venue" id="locationVenue"></p>
           <p class="location__hall" id="locationHall"></p>
           <p class="location__address" id="locationAddress"></p>
-          <p class="location__tel" id="locationTel"></p>
         </div>
-        <button class="btn btn--text location__copy animate-item" data-animate="fade-up" id="copyAddressBtn">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-          주소 복사
-        </button>
         <div class="location__map animate-item" data-animate="scale-in">
           <img class="location__map-img" id="locationMapImg" src="" alt="약도" loading="lazy">
         </div>
@@ -188,17 +188,45 @@
         <h2 class="section__title animate-item" data-animate="fade-up">전세버스 안내🚌</h2>
         <p class="animate-item" data-animate="fade-up">
           멀리서 귀한 걸음 해주시는 하객 여러분께서<br/>
-          편안하게 오실 수 있도록 전세버스를 준비했습니다.<br/>
+          편안하게 오실 수 있도록 전세버스를 준비했습니다.<br/><br/>
+          원활한 운행을 위해 정시에 출발할 예정이오니,<br/>
+          조금만 서둘러서 귀한 걸음 해주시길 부탁드립니다.<br/><br/>
         </p>
         <p>
-          [출발일시] <br/>
-          2026년 6월 6일 (토요일) <br/>
-          오전 00시 00분 출발<br/><br/>
-          [출발장소] <br/>
-          0000<br/><br/>
-
+          <span aria-hidden="true" style="display:inline-flex;align-items:center;vertical-align:middle;margin-right:0.15rem;">
+            <svg
+              viewBox="0 0 24 24"
+              width="14"
+              height="14"
+              stroke="currentColor"
+              stroke-width="2"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0Z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+          </span>
+          전북도청<br/>
+          <span aria-hidden="true" style="display:inline-flex;align-items:center;vertical-align:middle;margin-right:0.15rem;">
+            <svg
+              viewBox="0 0 24 24"
+              width="14"
+              height="14"
+              stroke="currentColor"
+              stroke-width="2"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+          </span>
+          오전 8시 00분<br/><br/>
         </p>
-        <button class="btn btn--text animate-item" data-animate="fade-up" id="busApplyBtn">
+        <button class="btn btn--text animate-item btn_bus" data-animate="fade-up" id="busApplyBtn">
           전세버스 이용 신청하기
         </button>
       </div>
@@ -209,7 +237,9 @@
       <div class="section__inner">
         <h2 class="section__title animate-item" data-animate="fade-up">결혼식 참석 여부</h2>
         <p class="animate-item" data-animate="fade-up">
-          참석 가능 여부를 미리 알려주시면 식장 준비에 큰 도움이 됩니다.
+          결혼식에 오시는 모든 분들을<br/>
+          더욱 특별히 모시고자 하오니,<br/>
+          참석 여부를 미리 알려주시면 감사하겠습니다.<br/><br/>
         </p>
         <button class="btn btn--text animate-item" data-animate="fade-up" id="rsvpApplyBtn">
           참석 여부 남기기
@@ -218,15 +248,17 @@
     </section>
 
     <!-- ─── Flower Section (화환 안내) ─── -->
-    <section class="section flower" id="flower">
+    <section class="section" id="flower">
       <div class="section__inner">
-        <div class="flower-card animate-item" data-animate="fade-up">
-          <div class="flower-card__badge">화환 안내💐</div>
-          <div class="flower-card__body">
-            <p>예식장 내부 공간이 협소하여<br>마음만 감사히 받고<br>화환은 정중히 사양하고자 합니다.</p>
-            <p>보내주시는 따뜻한 정성을 깊이 간직하며<br>그 마음 잊지 않고<br>예쁘게 잘 살겠습니다.🙇🏻‍♀️</p>
-          </div>
-        </div>
+        <h2 class="section__title animate-item" data-animate="fade-up">화환 안내💐</h2>
+        <p class="animate-item" data-animate="fade-up">
+          예식장 내부 공간이 협소하여<br/>
+          마음만 감사히 받고<br/>
+          화환은 정중히 사양하고자 합니다.<br/><br/>
+          보내주시는 따뜻한 정성을 깊이 간직하며<br/>
+          그 마음 잊지 않고<br/>
+          예쁘게 잘 살겠습니다.🙇🏻‍♀️
+        </p>
       </div>
     </section>
 
@@ -234,13 +266,17 @@
     <section class="section account" id="account">
       <div class="section__inner">
         <h2 class="section__title animate-item" data-animate="fade-up">마음 전하실 곳</h2>
-        <p class="account__desc animate-item" data-animate="fade-up">축하의 마음을 담아 축의금을 전달해 보세요.</p>
+        <p class="account__desc animate-item" data-animate="fade-up">멀리서도 축하의 마음을<br/>
+          전하고 싶으신 분들을 위해<br/>
+          계좌번호를 안내드립니다.<br/><br/>
+
+          소중한 축하를 보내주셔서 감사드리며,<br/>
+          따뜻한 마음에 깊이 감사드립니다.</p>
 
         <!-- Groom Accounts -->
         <div class="accordion animate-item" data-animate="fade-up">
           <button class="accordion__trigger" id="groomAccordion" aria-expanded="false">
-            <span class="accordion__icon">&#9835;</span>
-            <span>신랑측 계좌번호</span>
+            <span>신랑측</span>
             <svg class="accordion__arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
           </button>
           <div class="accordion__panel" id="groomAccordionPanel">
@@ -251,8 +287,7 @@
         <!-- Bride Accounts -->
         <div class="accordion animate-item" data-animate="fade-up">
           <button class="accordion__trigger" id="brideAccordion" aria-expanded="false">
-            <span class="accordion__icon">&#9835;</span>
-            <span>신부측 계좌번호</span>
+            <span>신부측</span>
             <svg class="accordion__arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
           </button>
           <div class="accordion__panel" id="brideAccordionPanel">
@@ -270,12 +305,78 @@
   </main>
 
   <!-- Bus 신청 모달 -->
+  <!-- 참석 여부 안내 모달 (사이트 진입 시) -->
+  <div class="bus-modal" id="rsvpIntroModal" aria-hidden="true" role="dialog" aria-label="참석 여부 안내">
+    <div class="bus-modal__backdrop" id="rsvpIntroBackdrop"></div>
+    <div class="bus-modal__dialog rsvp-intro">
+      <button class="bus-modal__close" id="rsvpIntroClose" aria-label="닫기">&times;</button>
+      <h3 class="bus-modal__title rsvp-intro__title">참석 여부 전달</h3>
+      <p class="rsvp-intro__text">
+        결혼식에 오시는 모든 분들을<br/>
+          더욱 특별히 모시고자 하오니,<br/>
+          참석 여부를 미리 알려주시면 감사하겠습니다.
+      </p>
+      <hr class="rsvp-intro__divider" aria-hidden="true">
+      <div class="rsvp-intro__meta">
+        <p class="rsvp-intro__row">
+          <span class="rsvp-intro__icon">♡</span>
+          <span id="rsvpIntroCouple"></span>
+        </p>
+        <p class="rsvp-intro__row">
+            <span class="rsvp-intro__icon" aria-hidden="true">
+              <svg
+                viewBox="0 0 24 24"
+                width="14"
+                height="14"
+                stroke="currentColor"
+                stroke-width="2"
+                fill="none"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+            </span>
+          <span id="rsvpIntroDate"></span>
+        </p>
+        <p class="rsvp-intro__row">
+          <span class="rsvp-intro__icon" aria-hidden="true">
+            <svg
+              viewBox="0 0 24 24"
+              width="14"
+              height="14"
+              stroke="currentColor"
+              stroke-width="2"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+            </svg>
+          </span>
+          <span id="rsvpIntroVenue"></span>
+        </p>
+      </div>
+      <button type="button" class="btn bus-modal__submit rsvp-intro__primary" id="rsvpIntroPrimaryBtn">
+        참석 여부 전달
+      </button>
+      <button type="button" class="rsvp-intro__mute" id="rsvpIntroMuteBtn">
+        <span class="rsvp-intro__mute-icon">✔</span>
+        <span>오늘하루 보지않기</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Bus 신청 모달 -->
   <div class="bus-modal" id="busModal" aria-hidden="true" role="dialog" aria-label="전세버스 이용 신청">
     <div class="bus-modal__backdrop" id="busModalBackdrop"></div>
     <div class="bus-modal__dialog">
       <button class="bus-modal__close" id="busModalClose" aria-label="닫기">&times;</button>
       <h3 class="bus-modal__title">전세버스 이용 신청</h3>
-      <p class="bus-modal__desc">성함과 연락처, 전달사항을 남겨주시면 버스 배정에 참고하겠습니다.</p>
+      <!-- <p class="bus-modal__desc">성함과 연락처, 전달사항을 남겨주시면 <br />버스 배정에 참고하겠습니다.</p> -->
       <form class="bus-modal__form" id="busForm">
         <label class="bus-modal__field">
           <span>성함<span class="bus-modal__required">*</span></span>
@@ -302,24 +403,27 @@
     <div class="bus-modal__dialog">
       <button class="bus-modal__close" id="rsvpModalClose" aria-label="닫기">&times;</button>
       <h3 class="bus-modal__title">참석 정보 전달하기 (RSVP)</h3>
-      <p class="bus-modal__desc">참석 여부를 선택하시고, 전달하고 싶은 정보를 남겨주세요.</p>
-
       <form class="bus-modal__form" id="rsvpForm">
         <!-- 참석 여부 토글 -->
-        <div class="rsvp-toggle-group rsvp-status-toggle" aria-label="참석 여부 선택" role="group">
-          <button type="button" class="rsvp-toggle-btn is-active" data-status="참석 가능">참석 가능</button>
-          <button type="button" class="rsvp-toggle-btn" data-status="참석 불가">참석 불가</button>
-        </div>
-        <input type="hidden" id="rsvpStatus" name="status" value="참석 가능" />
+        <label class="bus-modal__field">
+          <span>참석 여부<span class="bus-modal__required">*</span></span>
+          <div class="rsvp-toggle-group rsvp-status-toggle" aria-label="참석 여부 선택" role="group">
+            <button type="button" class="rsvp-toggle-btn" data-status="참석">참석</button>
+            <button type="button" class="rsvp-toggle-btn" data-status="불참">불참석</button>
+          </div>
+          <input type="hidden" id="rsvpStatus" name="status" value="" />
+        </label>
 
-        <p class="rsvp-section-label">신랑 &amp; 신부에게 전달될 정보를 입력해주세요.</p>
 
-        <!-- 신랑측 / 신부측 토글 -->
-        <div class="rsvp-toggle-group rsvp-party-toggle" aria-label="신랑측 / 신부측" role="group">
-          <button type="button" class="rsvp-toggle-btn is-active" data-party="신랑측">신랑측</button>
-          <button type="button" class="rsvp-toggle-btn" data-party="신부측">신부측</button>
-        </div>
-        <input type="hidden" id="rsvpParty" name="party" value="신랑측" />
+        <label class="bus-modal__field">
+          <span>어느 측 하객이신가요?<span class="bus-modal__required">*</span></span>
+          <!-- 신랑측 / 신부측 토글 -->
+          <div class="rsvp-toggle-group rsvp-party-toggle" aria-label="신랑측 / 신부측" role="group">
+            <button type="button" class="rsvp-toggle-btn" data-party="신랑">신랑측</button>
+            <button type="button" class="rsvp-toggle-btn" data-party="신부">신부측</button>
+          </div>
+          <input type="hidden" id="rsvpParty" name="party" value="" />
+        </label>
 
         <label class="bus-modal__field">
           <span>성함<span class="bus-modal__required">*</span></span>
@@ -332,27 +436,8 @@
         </label>
 
         <label class="bus-modal__field">
-          <span>전달사항</span>
-          <textarea id="rsvpMessage" name="message" rows="3" placeholder="축하 메시지, 식사 여부 등 자유롭게 남겨주세요. (최대 30자)"></textarea>
-        </label>
-
-        <label class="bus-modal__field">
-          <span>추가 인원</span>
-          <select id="rsvpExtra" name="extra">
-            <option value="없음" selected>없음</option>
-            <option value="1명">1명</option>
-            <option value="2명">2명</option>
-            <option value="3명 이상">3명 이상</option>
-          </select>
-        </label>
-
-        <label class="bus-modal__field">
-          <span>전세버스<span class="bus-modal__required">*</span></span>
-          <select id="rsvpBus" name="bus" required>
-            <option value="탑승안함" selected>탑승안함</option>
-            <option value="탑승">탑승</option>
-            <option value="미정">미정</option>
-          </select>
+          <span>동행인 수 (본인제외)</span>
+          <input type="number" id="rsvpCompanion" name="companion" min="0" step="1" value="0" />
         </label>
 
         <div class="rsvp-consent">
