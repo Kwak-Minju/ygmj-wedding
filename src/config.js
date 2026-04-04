@@ -52,8 +52,8 @@ const CONFIG = {
     ]
   },
   meta: {
-    title: "신랑 ♥ 신부 결혼합니다",
-    description: "2026년 6월 6일, 소중한 분들을 초대합니다."
+    title: "배영광 ♥ 곽민주 결혼합니다",
+    description: "2026년 6월 6일 토요일 12시 30분"
   }
 };
 
