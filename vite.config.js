@@ -4,7 +4,6 @@ import react from '@vitejs/plugin-react-swc';
 export default defineConfig({
   plugins: [react()],
   base: '/ygmj-wedding/',
-  publicDir: 'images',
   server: {
     port: 5173
   }

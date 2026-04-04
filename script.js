@@ -984,12 +984,8 @@ import CONFIG from './src/config.js';
     initFooter();
     initScrollAnimations();
 
-    // Auto-detect gallery images (story section removed)
-    const [, galleryImages] = await Promise.all([
-      loadImagesFromFolder('story'),
-      loadImagesFromFolder('gallery')
-    ]);
-
+    // Auto-detect gallery images only (story section removed)
+    const galleryImages = await loadImagesFromFolder('gallery');
     initGallery(galleryImages);
   }
 

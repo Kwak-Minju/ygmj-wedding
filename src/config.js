@@ -19,7 +19,7 @@ const CONFIG = {
   },
   wedding: {
     date: "2026-06-06",
-    time: "13:00",
+    time: "12:30",
     venue: "성균관컨벤션웨딩홀",
     hall: "3층",
     address: "서울 종로구 성균관로 31",
