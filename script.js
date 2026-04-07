@@ -307,19 +307,18 @@ import CONFIG from './src/config.js';
     function parentLine(father, mother, fatherDeceased, motherDeceased) {
       const fd = fatherDeceased ? ' deceased' : '';
       const md = motherDeceased ? ' deceased' : '';
-      return `<span class="${fd}">${father}</span> · <span class="${md}">${mother}</span>`;
+      return `<span class="${fd}">${father}</span> 
+        <span class="parent-dot">●</span> <span class="${md}">${mother}</span>`;
     }
 
     const parentsHTML = `
       <div class="parent-row">
         ${parentLine(g.father, g.mother, g.fatherDeceased, g.motherDeceased)}
-        <span class="parent-dot">●</span>
-        의 아들 <span class="child-name">${g.name}</span>
+        <span class="parent-label">의 아들</span> <span class="child-name">${g.name}</span>
       </div>
-      <div class="parent-row">
+      <div class="parent-row is-bride">
         ${parentLine(b.father, b.mother, b.fatherDeceased, b.motherDeceased)}
-        <span class="parent-dot">●</span>
-        의 딸 <span class="child-name">${b.name}</span>
+        <span class="parent-label">의 딸</span> <span class="child-name">${b.name}</span>
       </div>
     `;
 

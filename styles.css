@@ -251,6 +251,21 @@ a {
   font-weight: 600;
 }
 
+.bus_text {
+  font-size: 0.9375rem;
+  font-weight: 400;
+  line-height: 2;
+  color: var(--color-text-light);
+  white-space: pre-line;
+}
+
+.bus_text_info {
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 2;
+  color: var(--color-text-light);
+}
+
 /* ═══════════════════════════════════════════
    Bus Modal (전세버스 신청)
    ═══════════════════════════════════════════ */
@@ -626,7 +641,7 @@ a {
   font-family: var(--font-serif);
   font-size: 1.25rem;
   font-weight: 600;
-  letter-spacing: 4px;
+  letter-spacing: 2px;
   margin-bottom: var(--spacing-lg);
   color: var(--color-text);
 }
@@ -636,44 +651,11 @@ a {
   background-color: var(--color-bg);
 }
 
-.flower-card {
-  max-width: 420px;
-  margin: 0 auto;
-  padding: 1.75rem 1.5rem 2rem;
-  border-radius: 24px;
-  border: 1px solid #f4dbe6;
-  background: #fffafc;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
-  position: relative;
-}
-
-.flower-card__badge {
-  position: absolute;
-  top: -16px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 0.4rem 1.5rem;
-  border-radius: 999px;
-  background: #f3c7dd;
-  color: #ffffff;
-  font-size: 0.875rem;
-}
-
-.flower-card__body {
-  font-size: 0.875rem;
-  line-height: 1.8;
-  color: var(--color-text);
-}
-
-.flower-card__body p + p {
-  margin-top: 0.75rem;
-}
-
 /* ─── Ornament ─── */
 .ornament {
   font-size: 1.25rem;
   color: var(--color-accent);
-  margin-bottom: var(--spacing-md);
+  margin-bottom: var(--spacing-xs);
   opacity: 0.6;
 }
 
@@ -682,8 +664,8 @@ a {
    ═══════════════════════════════════════════ */
 .hero {
   position: relative;
-  min-height: 100vh;
-  min-height: 100dvh;
+  min-height: 100vh;   /* fallback */
+  min-height: 100svh;  /* 모바일에서도 스크롤 시 높이 변동 없이 고정 */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -779,7 +761,7 @@ a {
 
 .countdown__label {
   font-size: 0.75rem;
-  font-weight: 400;
+  font-weight: 500;
   letter-spacing: 3px;
   opacity: 0.7;
   margin-bottom: var(--spacing-sm);
@@ -805,8 +787,8 @@ a {
 
 .countdown__number {
   font-family: var(--font-display);
-  font-size: 2rem;
-  font-weight: 300;
+  font-size: 1.75rem;
+  font-weight: 400;
   line-height: 1;
   letter-spacing: 2px;
 }
@@ -815,7 +797,7 @@ a {
   font-size: 0.625rem;
   font-weight: 500;
   letter-spacing: 2px;
-  opacity: 0.6;
+  opacity: 0.7;
   margin-top: 0.25rem;
 }
 
@@ -841,7 +823,7 @@ a {
   line-height: 2;
   color: var(--color-text-light);
   white-space: pre-line;
-  margin-bottom: var(--spacing-xl);
+  margin-bottom: var(--spacing-lg);
 }
 
 .greeting__parents {
@@ -859,6 +841,10 @@ a {
   gap: 0.5rem;
 }
 
+.greeting__parents .parent-row.is-bride {
+  margin-left: 7px;
+}
+
 .greeting__parents .parent-dot {
   color: var(--color-accent);
   font-size: 0.5rem;
@@ -866,6 +852,10 @@ a {
 
 .greeting__parents .child-name {
   font-weight: 500;
+}
+
+.greeting__parents .parent-label {
+  font-size: 0.8em;
 }
 
 .greeting__parents .deceased::before {
@@ -1183,6 +1173,7 @@ a {
   font-size: 0.9375rem;
   font-weight: 500;
   margin-bottom: 0.25rem;
+  color: var(--color-text-light);
 }
 
 .location-guide__list {
@@ -1191,6 +1182,7 @@ a {
   list-style: disc;
   font-size: 0.8rem;
   line-height: 1.6;
+  color: var(--color-text-light);
 }
 
 /* ═══════════════════════════════════════════
@@ -1200,9 +1192,13 @@ a {
   background-color: var(--color-bg-warm);
 }
 
+#bus {
+  background-color: var(--color-bg-warm);
+}
+
 .account__desc {
   font-size: 0.875rem;
-  font-weight: 300;
+  font-weight: 500;
   color: var(--color-text-light);
   margin-bottom: var(--spacing-lg);
 }
@@ -1281,7 +1277,7 @@ a {
 
 .account-item__role {
   font-size: 0.6875rem;
-  font-weight: 300;
+  font-weight: 400;
   color: var(--color-text-muted);
   letter-spacing: 1px;
 }
@@ -1303,7 +1299,7 @@ a {
   gap: 0.25rem;
   padding: 0.5rem 0.75rem;
   font-size: 0.75rem;
-  font-weight: 300;
+  font-weight: 500;
   color: var(--color-accent-dark);
   border: 1px solid var(--color-accent-light);
   border-radius: 100px;
@@ -1405,18 +1401,15 @@ a {
    Footer
    ═══════════════════════════════════════════ */
 .footer {
-  padding: var(--spacing-lg) var(--spacing-md);
-  padding-bottom: calc(var(--spacing-lg) + var(--safe-bottom));
+  padding: var(--spacing-md) var(--spacing-md);
   text-align: center;
-  background: var(--color-bg);
-  border-top: 1px solid var(--color-border);
+  background: var(--color-bg-warm);
 }
 
 .footer__text {
-  font-size: 0.75rem;
-  font-weight: 300;
+  font-size: 0.6rem;
+  font-weight: 400;
   color: var(--color-text-muted);
-  letter-spacing: 2px;
 }
 
 /* ═══════════════════════════════════════════
