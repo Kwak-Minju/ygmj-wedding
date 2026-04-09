@@ -12,8 +12,15 @@ import CONFIG from './src/config.js';
      Utility Helpers
      ═══════════════════════════════════════════ */
 
-  const $ = (sel, ctx = document) => ctx.querySelector(sel);
-  const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
+  const $ = (sel, ctx = document) => {
+    if (!ctx) return null;
+    return ctx.querySelector(sel);
+  };
+
+  const $$ = (sel, ctx = document) => {
+    if (!ctx) return [];
+    return [...ctx.querySelectorAll(sel)];
+  };
 
   function formatDate(dateStr, timeStr) {
     const d = new Date(`${dateStr}T${timeStr}:00`);
@@ -422,56 +429,11 @@ import CONFIG from './src/config.js';
   }
 
   /* ═══════════════════════════════════════════
-     Story Section
+     Story / Gallery Sections (removed)
      ═══════════════════════════════════════════ */
 
-  function initStory(storyImages) {
-    $('#storyTitle').textContent = CONFIG.story.title;
-    $('#storyContent').textContent = CONFIG.story.content;
-
-    const container = $('#storyPhotos');
-    // Remove loading placeholder if present
-    const placeholder = container.querySelector('.loading-placeholder');
-    if (placeholder) placeholder.remove();
-
-    if (storyImages.length === 0) return;
-
-    storyImages.forEach((src, i) => {
-      const div = document.createElement('div');
-      div.className = 'story__photo-item animate-item';
-      div.setAttribute('data-animate', 'fade-up');
-      div.innerHTML = `<img src="${src}" alt="스토리 사진 ${i + 1}" loading="lazy">`;
-      div.addEventListener('click', () => openPhotoModal(storyImages, i));
-      container.appendChild(div);
-    });
-  }
-
-  /* ═══════════════════════════════════════════
-     Gallery Section
-     ═══════════════════════════════════════════ */
-
-  function initGallery(galleryImages) {
-    const grid = $('#galleryGrid');
-    // Remove loading placeholder if present
-    const placeholder = grid.querySelector('.loading-placeholder');
-    if (placeholder) placeholder.remove();
-
-    if (galleryImages.length === 0) {
-      // Hide gallery section if no images found
-      const gallerySection = $('#gallery');
-      if (gallerySection) gallerySection.style.display = 'none';
-      return;
-    }
-
-    galleryImages.forEach((src, i) => {
-      const div = document.createElement('div');
-      div.className = 'gallery__item animate-item';
-      div.setAttribute('data-animate', 'scale-in');
-      div.innerHTML = `<img src="${src}" alt="갤러리 사진 ${i + 1}" loading="lazy">`;
-      div.addEventListener('click', () => openPhotoModal(galleryImages, i));
-      grid.appendChild(div);
-    });
-  }
+  // Our Story / Gallery 섹션은 마크업에서 제거되어
+  // 관련 JS 렌더링 코드는 더 이상 사용하지 않습니다.
 
   /* ═══════════════════════════════════════════
      Photo Modal (with swipe)
@@ -1058,19 +1020,7 @@ import CONFIG from './src/config.js';
     footerEl.innerHTML = `${names}<br>COPYRIGHT(C) ${names} ALL RIGHTS RESERVED`;
   }
 
-  /* ═══════════════════════════════════════════
-     Loading Placeholders
-     ═══════════════════════════════════════════ */
-
-  function showLoadingPlaceholders() {
-    const storyPhotos = $('#storyPhotos');
-    const galleryGrid = $('#galleryGrid');
-
-    const placeholderHTML = '<div class="loading-placeholder"><span class="loading-dot"></span><span class="loading-dot"></span><span class="loading-dot"></span></div>';
-
-    if (storyPhotos) storyPhotos.innerHTML = placeholderHTML;
-    if (galleryGrid) galleryGrid.innerHTML = placeholderHTML;
-  }
+  /* Story / Gallery용 Loading Placeholders는 사용하지 않음 */
 
   /* ═══════════════════════════════════════════
      Scroll Animations (IntersectionObserver)
@@ -1125,9 +1075,6 @@ import CONFIG from './src/config.js';
     initGreeting();
     initCalendar();
 
-    // Show loading placeholders while detecting images
-    showLoadingPlaceholders();
-
     // Init sections that don't depend on image detection
     initPhotoModal();
     initLocation();
@@ -1137,10 +1084,6 @@ import CONFIG from './src/config.js';
     initAccounts();
     initFooter();
     initScrollAnimations();
-
-    // Auto-detect gallery images only (story section removed)
-    const galleryImages = await loadImagesFromFolder('gallery');
-    initGallery(galleryImages);
   }
 
   if (document.readyState === 'loading') {
