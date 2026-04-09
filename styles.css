@@ -667,21 +667,7 @@ a {
   display: block;
   padding: 0;
   overflow: hidden;
-  background-color: var(--color-bg);
-}
-
-.hero__overlay {
-  position: absolute;
-  inset: 0;
-  /* background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    transparent 40%,
-    rgba(58, 50, 40, 0.3) 60%,
-    rgba(58, 50, 40, 0.75) 85%,
-    rgba(58, 50, 40, 0.9) 100%
-  ); */
-  z-index: 1;
+  background-color: var(--color-bg-warm);
 }
 
 .hero__photo {
@@ -689,15 +675,6 @@ a {
   width: 100%;
   height: auto;
   object-fit: contain;
-}
-
-.hero__content {
-  position: relative;
-  z-index: 2;
-  text-align: center;
-  color: var(--color-white);
-  padding: 0 var(--spacing-md) var(--spacing-lg);
-  width: 100%;
 }
 
 .hero__label {
