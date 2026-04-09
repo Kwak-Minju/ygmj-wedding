@@ -246,7 +246,7 @@ import CONFIG from './src/config.js';
      ═══════════════════════════════════════════ */
 
   function initHero() {
-    $('#heroPhoto').src = 'images/hero/1.jpg';
+    $('#heroPhoto').src = 'images/hero/1.gif';
     // $('#heroNames').textContent = `${CONFIG.groom.name}  ·  ${CONFIG.bride.name}`;
     // $('#heroDate').textContent = formatDate(CONFIG.wedding.date, CONFIG.wedding.time);
     // $('#heroVenue').textContent = CONFIG.wedding.venue;
@@ -274,7 +274,7 @@ import CONFIG from './src/config.js';
         return;
       }
 
-      const totalDays = Math.ceil(diff / (1000 * 60 * 60 * 24));
+      const totalDays = Math.floor(diff / (1000 * 60 * 60 * 24));
       const dText = `D-${totalDays}`;
       labelEl.innerHTML = `결혼식까지 <span class="countdown__em">${dText}</span>`;
 
