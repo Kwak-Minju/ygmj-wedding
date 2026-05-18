@@ -1,6 +1,6 @@
 // React 버전 CONFIG 모듈
 const CONFIG = {
-  useCurtain: false,
+  useCurtain: true,
   groom: {
     name: "영광",
     fullName: "배영광",

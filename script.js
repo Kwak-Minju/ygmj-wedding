@@ -145,7 +145,7 @@ import CONFIG from './src/config.js';
       return;
     }
 
-    namesEl.textContent = `${CONFIG.groom.name}  &  ${CONFIG.bride.name}`;
+    namesEl.textContent = `${CONFIG.groom.nameEn}  &  ${CONFIG.bride.nameEn}`;
 
     const btn = $('#curtainBtn');
     // If the open button was removed, hide curtain and start petals immediately
