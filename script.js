@@ -136,17 +136,24 @@ import CONFIG from './src/config.js';
 
   function initCurtain() {
     const curtain = $('#curtain');
-    const btn = $('#curtainBtn');
     const namesEl = $('#curtainNames');
 
-    // If useCurtain is false, skip the curtain entirely
-    if (CONFIG.useCurtain === false) {
-      curtain.style.display = 'none';
+    // If useCurtain is false, or curtain elements are missing, skip curtain flow
+    if (CONFIG.useCurtain === false || !curtain || !namesEl) {
+      if (curtain) curtain.style.display = 'none';
       initPetals();
       return;
     }
 
     namesEl.textContent = `${CONFIG.groom.name}  &  ${CONFIG.bride.name}`;
+
+    const btn = $('#curtainBtn');
+    // If the open button was removed, hide curtain and start petals immediately
+    if (!btn) {
+      curtain.style.display = 'none';
+      initPetals();
+      return;
+    }
 
     btn.addEventListener('click', () => {
       curtain.classList.add('is-open');
