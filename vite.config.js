@@ -5,6 +5,7 @@ export default defineConfig({
   plugins: [react()],
   base: '/ygmj-wedding/',
   server: {
+    host: '0.0.0.0',
     port: 5173
   }
 });

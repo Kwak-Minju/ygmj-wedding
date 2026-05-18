@@ -796,6 +796,14 @@ a {
   margin-bottom: var(--spacing-lg);
 }
 
+.greeting__photo {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto var(--spacing-lg);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 12px 30px rgba(58, 50, 40, 0.12);
+}
+
 .greeting__parents {
   font-size: 0.875rem;
   font-weight: 400;
@@ -1355,6 +1363,26 @@ a {
 
 #busApplyBtn:hover,
 #rsvpApplyBtn:hover {
+  background: var(--color-accent-dark);
+  color: #ffffff;
+}
+
+/* Countdown 아래에 위치한 동일한 CTA 버튼 스타일
+   (ID를 동일하게 적용하지 않으려는 경우 공통 클래스 사용 권장) */
+#footerRsvpBtn,
+#footerBusBtn {
+  padding: 0.7rem 1.6rem;
+  border-radius: 999px;
+  background: var(--color-accent);
+  color: #ffffff;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  margin: 0 0.5rem;
+}
+
+#footerRsvpBtn:hover,
+#footerBusBtn:hover {
   background: var(--color-accent-dark);
   color: #ffffff;
 }

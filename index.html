@@ -88,7 +88,13 @@
           </div>
         </div>
       </div>
-    </section>
+      </div>
+      <!-- Countdown 아래에 빠른 액션 버튼 추가 -->
+      <div class="countdown__actions" style="text-align:center;padding-bottom:1rem;">
+        <button class="btn btn--text animate-item" data-animate="fade-up" id="footerRsvpBtn">참석 여부 남기기</button>
+        <button class="btn btn--text animate-item" data-animate="fade-up" id="footerBusBtn">전세버스 신청하기</button>
+      </div>
+      </section>
     </section>
 
     <!-- ─── Countdown Section ─── -->
@@ -472,7 +478,7 @@
     <div class="bus-modal__backdrop" id="rsvpModalBackdrop"></div>
     <div class="bus-modal__dialog">
       <button class="bus-modal__close" id="rsvpModalClose" aria-label="닫기">&times;</button>
-      <h3 class="bus-modal__title">참석 정보 전달하기 (RSVP)</h3>
+      <h3 class="bus-modal__title">참석 정보 전달하기</h3>
       <form class="bus-modal__form" id="rsvpForm">
         <!-- 참석 여부 토글 -->
         <label class="bus-modal__field">

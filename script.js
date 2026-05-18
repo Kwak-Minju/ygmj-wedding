@@ -1016,8 +1016,22 @@ import CONFIG from './src/config.js';
   function initFooter() {
     const names = 'Glory & Minju';
     const footerEl = $('#footerText');
-    if (!footerEl) return;
-    footerEl.innerHTML = `${names}<br>COPYRIGHT(C) ${names} ALL RIGHTS RESERVED`;
+    if (footerEl) {
+      footerEl.innerHTML = `${names}<br>COPYRIGHT(C) ${names} ALL RIGHTS RESERVED`;
+    }
+
+    // Attach handlers to buttons wherever they exist on the page
+    const footerRsvp = $('#footerRsvpBtn');
+    const footerBus = $('#footerBusBtn');
+    const rsvpTrigger = $('#rsvpApplyBtn');
+    const busTrigger = $('#busApplyBtn');
+
+    if (footerRsvp && rsvpTrigger) {
+      footerRsvp.addEventListener('click', () => rsvpTrigger.click());
+    }
+    if (footerBus && busTrigger) {
+      footerBus.addEventListener('click', () => busTrigger.click());
+    }
   }
 
   /* Story / Gallery용 Loading Placeholders는 사용하지 않음 */
